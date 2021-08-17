@@ -5,16 +5,9 @@ import sys, pygame, random, time
 # importing data and class 'Scores' from file 'Scores.py'
 from Scores import Scores
 
-    # new instance of Score object
+# new instance of Score object
 scores = Scores()
 scores.get_scores()
-
-    # scores.set_score(14, 'test')
-    # scores.set_score(15, '5test')
-    # scores.set_score(135, '5trest')
-    # scores.set_score(315, '5tfest')
-
-
 
 # 1.1 Inisialisasi game
 pygame.init()
@@ -77,16 +70,11 @@ pygame.display.set_icon(ikon)
 # 2 buat function
 # looping
 def gamecow():
-
-
     # start background music
     background_music()
 
     # new instance of Crash object
     crash = Crash()
-
-
-
 
     # display menu
     menu_game()
@@ -192,7 +180,7 @@ def gamecow():
             SCREEN.blit(cow, (CowX, CowY))
 
         # text object utk game_font
-        text_lives = game_font.render('Lives: ' + str(Lives),  True, lives_text_color)
+        text_lives = game_font.render('Lives: ' + str(Lives), True, lives_text_color)
         text_points = game_font.render('Score: ' + str(Points), True, (255, 255, 255))
         SCREEN.blit(text_lives, (120, 0))
         SCREEN.blit(text_points, (250, 0))
@@ -207,6 +195,7 @@ def gamecow():
         clock.tick(FPS)
         pygame.display.update()
 
+
 # 4 membuat score
 # rumput hijau dapat poin 1
 def check_rumputhijau(CowX, CowY, RUMPUTHIJAUX, RUMPUTHIJAUY):
@@ -216,6 +205,7 @@ def check_rumputhijau(CowX, CowY, RUMPUTHIJAUX, RUMPUTHIJAUY):
             return True
     return False
 
+
 # rumput kuning dikurangi 1 poin
 def check_rumputkuning(CowX, CowY, RUMPUTKUNINGX, RUMPUTKUNINGY):
     if (CowX - RUMPUTKUNINGX) <= RUMPUTKUNINGSIZE and (RUMPUTKUNINGX - CowX) <= cowwidth:
@@ -224,14 +214,16 @@ def check_rumputkuning(CowX, CowY, RUMPUTKUNINGX, RUMPUTKUNINGY):
             return True
     return False
 
-#membuat function crush
+
+# membuat function crush
 def cowcrash(CowX, CowY, BATUX, BATUY):
     if (CowX - BATUX) <= BATU_SIZE and (BATUX - CowX) <= cowwidth:
         if (CowY - BATUY) <= BATU_SIZE and (BATUY - CowY) <= cowheight:
             return True
     return False
 
-#menu game 
+
+# menu game
 def menu_game():
     points = 0
     print_menu(points)
@@ -261,7 +253,6 @@ def menu_game():
 
 
 def print_menu(points):
-
     SCREEN.blit(menu_screen, (0, 0))  # 4backgorund
 
     print_created_by()
@@ -282,7 +273,8 @@ def print_menu(points):
     points = points % 2
     pygame.display.update()
 
-#tampilan screen diawal game berisi data kelompok
+
+# tampilan screen diawal game berisi data kelompok
 def print_created_by():
     text_color = (100, 0, 0)
     print_name = created_font.render("Game created by : Kelompok 1", True, text_color)
@@ -296,6 +288,7 @@ def print_created_by():
         SCREEN.blit(print_name, (int(size_x / 10), int(name_y_pos * size_y / 10)))
         name_y_pos += 1
         number += 1
+
 
 def background_music():
     # volume level available values from 0.0 to 1.0
@@ -327,12 +320,11 @@ def gameover():
 
         pygame.display.update()
         # 9 tambahkan library time
-        # time.sleep(3)
         wait_for_key()
         gamecow()
 
-def wait_for_key():
 
+def wait_for_key():
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -343,20 +335,21 @@ def wait_for_key():
 
                 return True
 
+
 def print_scores():
     # print(" Game Over ***" + str(Points))
     data = scores.get_scores()
 
     text_color = (100, 0, 0)
     print_name = created_font.render("Best scores: ", True, text_color)
-    SCREEN.blit(print_name, ( int(size_x / 2), int(5 * size_y / 10)))
+    SCREEN.blit(print_name, (int(size_x / 2), int(5 * size_y / 10)))
 
     # created_by = ["Arny Lattu", "Yusiana", "Deka Nirmala", "Rizki Nurmala"]
     name_y_pos = 6
     number = 1
     for value in data:
         # print_name = created_font.render(str(value[0]) + ": " + value[1], True, text_color)
-        print_name = created_font.render(str(value[0]) , True, text_color)
+        print_name = created_font.render(str(value[0]), True, text_color)
         SCREEN.blit(print_name, (int(size_x / 2), int(name_y_pos * size_y / 10)))
         name_y_pos += 1
         number += 1
@@ -390,7 +383,6 @@ class Crash:
             if self.end - self.start > self.timer:
                 self.crash_b = False
         return False
-
 
 
 gamecow()
