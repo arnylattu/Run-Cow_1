@@ -309,8 +309,14 @@ def gameover():
     else:
         # print(" Game Over ***" + str(Points))
         scores.set_score(Points, 'GameOver')
-        SCREEN.fill((200, 200, 200))
-        crash = gofont.render('TERTABRAK', True, (0, 0, 0))
+
+        s = pygame.Surface((size_x, size_y))  # the size of your rect
+        s.set_alpha(150)  # alpha level
+        s.fill((255, 255, 255))  # this fills the entire surface
+        SCREEN.blit(s, (0, 0))  # (0,0) are the top-left coordinates
+
+        #SCREEN.fill((200, 200, 200))
+        crash = gofont.render('TERTABRAK', True, (102,178, 255)) # color R G B
         game_over = gofont.render('GAME END', True, (0, 0, 0))
         SCREEN.blit(crash, (int(size_x / 10), int(size_y / 10)))
         SCREEN.blit(game_over, (int(size_x / 10), int(3 * size_y / 10)))
@@ -342,15 +348,15 @@ def print_scores():
 
     text_color = (100, 0, 0)
     print_name = created_font.render("Best scores: ", True, text_color)
-    SCREEN.blit(print_name, (int(size_x / 2), int(5 * size_y / 10)))
+    SCREEN.blit(print_name, (int((size_x / 2)+(size_x / 6)), int( size_y / 10)))
 
     # created_by = ["Arny Lattu", "Yusiana", "Deka Nirmala", "Rizki Nurmala"]
-    name_y_pos = 6
+    name_y_pos = 2
     number = 1
     for value in data:
         # print_name = created_font.render(str(value[0]) + ": " + value[1], True, text_color)
         print_name = created_font.render(str(value[0]), True, text_color)
-        SCREEN.blit(print_name, (int(size_x / 2), int(name_y_pos * size_y / 10)))
+        SCREEN.blit(print_name, (int((size_x / 2)+(size_x / 6)), int(name_y_pos * size_y / 10)))
         name_y_pos += 1
         number += 1
         # print(value)
