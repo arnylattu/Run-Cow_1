@@ -1,5 +1,20 @@
+#!/usr/bin/env python3
 # 1. Masukkan Library
 import sys, pygame, random, time
+
+# importing data and class 'Scores' from file 'Scores.py'
+from Scores import Scores
+
+    # new instance of Score object
+scores = Scores()
+scores.get_scores()
+
+    # scores.set_score(14, 'test')
+    # scores.set_score(15, '5test')
+    # scores.set_score(135, '5trest')
+    # scores.set_score(315, '5tfest')
+
+
 
 # 1.1 Inisialisasi game
 pygame.init()
@@ -11,19 +26,19 @@ size_y = 512  # tinggi
 FPS = 30
 
 # list variabel
-cowwidth = size_x / 9
-cowheight = size_y / 4
-RECTWIDTH = size_x / 32
-RECTHEIGHT = size_y / 16
-RUMPUTHIJAUSIZE = size_x / 16
-RUMPUTKUNINGSIZE = size_x / 16
-BATU_SIZE = size_x / 16
-YDIFF = size_y / 8
+cowwidth = int(size_x / 9)
+cowheight = int(size_y / 4)
+RECTWIDTH = int(size_x / 32)
+RECTHEIGHT = int(size_y / 16)
+RUMPUTHIJAUSIZE = int(size_x / 16)
+RUMPUTKUNINGSIZE = int(size_x / 16)
+BATU_SIZE = int(size_x / 16)
+YDIFF = int(size_y / 8)
 
 STEP = 5
 
 Lives = 3
-
+Points = 0
 # 1 buat jendelanya
 # buat variabel dengan nama SCREEN
 
@@ -63,24 +78,30 @@ pygame.display.set_icon(ikon)
 # looping
 def gamecow():
 
+
     # start background music
     background_music()
 
     # new instance of Crash object
     crash = Crash()
+
+
+
+
+    # display menu
     menu_game()
+    # print_scores()
 
-
-
-    points = 0
+    global Points
+    Points = 0
     global Lives
     Lives = 3
     # crash = False
     after_crash_timer = 3
 
     # buat rectangle
-    RECTX, RECTY = size_x / 2, 0
-    CowX, CowY = size_x / 2, size_y / 2 + cowheight
+    RECTX, RECTY = int(size_x / 2), 0
+    CowX, CowY = int(size_x / 2), int(size_y / 2 + cowheight)
     RUMPUTHIJAUX, RUMPUTHIJAUY = random.randrange(0.2 * size_x, 0.8 * size_x, STEP), 0
     RUMPUTKUNINGX, RUMPUTKUNINGY = random.randrange(0.1 * size_x, 0.8 * size_x, STEP), 0
     BATUX, BATUY = random.randrange(0.2 * size_x, 0.8 * size_x, STEP), 0
@@ -132,14 +153,14 @@ def gamecow():
         # if cow get green grass
         if (check_rumputhijau(CowX, CowY, RUMPUTHIJAUX, RUMPUTHIJAUY)):
             RUMPUTHIJAUX, RUMPUTHIJAUY = random.randrange(0.2 * size_x, 0.8 * size_x, STEP), 0
-            points += 1
-            print(points)
+            Points += 1
+            print(Points)
 
         if (check_rumputkuning(CowX, CowY, RUMPUTKUNINGX, RUMPUTKUNINGY)):
             RUMPUTKUNINGX, RUMPUTKUNINGY = random.randrange(0.2 * size_x, 0.8 * size_x, STEP), 0
-            if points > 0:
-                points -= 1
-            print(points)
+            if Points > 0:
+                Points -= 1
+            print(Points)
 
         RECTY += STEP
         RECTY = RECTY % YDIFF
@@ -156,7 +177,7 @@ def gamecow():
         if RUMPUTKUNINGY >= size_y:
             RUMPUTKUNINGX, RUMPUTKUNINGY = random.randrange(0.2 * size_x, 0.8 * size_x, STEP), 0
         for i in range(-1, 8):
-            pygame.draw.rect(SCREEN, (0, 255, 0), [RECTX, RECTY + i * YDIFF, RECTWIDTH, RECTHEIGHT])
+            pygame.draw.rect(SCREEN, (0, 255, 0), [RECTX, int(RECTY + i * YDIFF), RECTWIDTH, RECTHEIGHT])
 
         SCREEN.blit(rumputhijau, (RUMPUTHIJAUX, RUMPUTHIJAUY))
         SCREEN.blit(rumputkuning, (RUMPUTKUNINGX, RUMPUTKUNINGY))
@@ -172,7 +193,7 @@ def gamecow():
 
         # text object utk game_font
         text_lives = game_font.render('Lives: ' + str(Lives),  True, lives_text_color)
-        text_points = game_font.render('Score: ' + str(points), True, (255, 255, 255))
+        text_points = game_font.render('Score: ' + str(Points), True, (255, 255, 255))
         SCREEN.blit(text_lives, (120, 0))
         SCREEN.blit(text_points, (250, 0))
 
@@ -244,7 +265,7 @@ def print_menu(points):
     SCREEN.blit(menu_screen, (0, 0))  # 4backgorund
 
     print_created_by()
-
+    # print_scores()
     if points == 0:
         color_a = (128, 0, 0)
         color_b = (0, 0, 0)
@@ -254,8 +275,8 @@ def print_menu(points):
 
     mulai = menufont.render('START GAME', True, color_a)
     keluar = menufont.render('QUIT GAME', True, color_b)
-    SCREEN.blit(mulai, (size_x / 10, size_y / 10))
-    SCREEN.blit(keluar, (size_x / 10, 3 * size_y / 10))
+    SCREEN.blit(mulai, (int(size_x / 10), int(size_y / 10)))
+    SCREEN.blit(keluar, (int(size_x / 10), int(3 * size_y / 10)))
 
     print(" ... ")
     points = points % 2
@@ -265,14 +286,14 @@ def print_menu(points):
 def print_created_by():
     text_color = (100, 0, 0)
     print_name = created_font.render("Game created by : Kelompok 1", True, text_color)
-    SCREEN.blit(print_name, (size_x / 10, 5 * size_y / 10))
+    SCREEN.blit(print_name, (int(size_x / 10), int(5 * size_y / 10)))
 
     created_by = ["Arny Lattu", "Yusiana", "Deka Nirmala", "Rizki Nurmala"]
     name_y_pos = 6
     number = 1
     for name in created_by:
         print_name = created_font.render(str(number) + ": " + name, True, text_color)
-        SCREEN.blit(print_name, (size_x / 10, name_y_pos * size_y / 10))
+        SCREEN.blit(print_name, (int(size_x / 10), int(name_y_pos * size_y / 10)))
         name_y_pos += 1
         number += 1
 
@@ -288,23 +309,58 @@ def background_music():
 
 def gameover():
     global Lives
+    global Points
     if Lives > 1:
         Lives -= 1
         print(" -1 Live")
     else:
-        print(" Game Over ***")
+        # print(" Game Over ***" + str(Points))
+        scores.set_score(Points, 'GameOver')
         SCREEN.fill((200, 200, 200))
         crash = gofont.render('TERTABRAK', True, (0, 0, 0))
         game_over = gofont.render('GAME END', True, (0, 0, 0))
-        SCREEN.blit(crash, (size_x / 10, size_y / 10))
-        SCREEN.blit(game_over, (size_x / 10, 3 * size_y / 10))
+        SCREEN.blit(crash, (int(size_x / 10), int(size_y / 10)))
+        SCREEN.blit(game_over, (int(size_x / 10), int(3 * size_y / 10)))
 
         print_created_by()
+        print_scores()
 
         pygame.display.update()
         # 9 tambahkan library time
-        time.sleep(2)
+        # time.sleep(3)
+        wait_for_key()
         gamecow()
+
+def wait_for_key():
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            # 3 bikin button
+            elif event.type == pygame.KEYDOWN:
+
+                return True
+
+def print_scores():
+    # print(" Game Over ***" + str(Points))
+    data = scores.get_scores()
+
+    text_color = (100, 0, 0)
+    print_name = created_font.render("Best scores: ", True, text_color)
+    SCREEN.blit(print_name, ( int(size_x / 2), int(5 * size_y / 10)))
+
+    # created_by = ["Arny Lattu", "Yusiana", "Deka Nirmala", "Rizki Nurmala"]
+    name_y_pos = 6
+    number = 1
+    for value in data:
+        # print_name = created_font.render(str(value[0]) + ": " + value[1], True, text_color)
+        print_name = created_font.render(str(value[0]) , True, text_color)
+        SCREEN.blit(print_name, (int(size_x / 2), int(name_y_pos * size_y / 10)))
+        name_y_pos += 1
+        number += 1
+        # print(value)
 
 
 def cek_step_out(CowX):
@@ -327,13 +383,14 @@ class Crash:
         if not self.crash_b:
             self.start = time.time()
             self.crash_b = True
-            print(" __crash __ ")
+            # print(" __crash __ ")
             return True
         else:
             self.end = time.time()
             if self.end - self.start > self.timer:
                 self.crash_b = False
         return False
+
 
 
 gamecow()
